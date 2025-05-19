@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.practica_parcial_swqlite.model.beans.Appearance
 import com.example.practica_parcial_swqlite.model.beans.Biography
 import com.example.practica_parcial_swqlite.model.beans.Hero
@@ -59,12 +60,15 @@ class OpenHelper(context: Context): SQLiteOpenHelper(
     }
 
     fun newHero(hero: Hero) {
+        val db = this.writableDatabase
         val datos = ContentValues()
         datos.put("full_name", hero.fullName)
         datos.put("gender", hero.gender)
         datos.put("race", hero.race)
         datos.put("intelligence", hero.intelligence)
         datos.put("imageUrl", hero.imageUrl)
+        db.insert("heroes", null, datos)
+        db.close()
     }
 
     fun deleteHero(id: Int) {
