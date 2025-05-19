@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class HeroViewModel (): ViewModel(){
 
-    var heroesLists: MutableList<Hero> by mutableStateOf(arrayListOf())
+    var heroesList: MutableList<Hero> by mutableStateOf(arrayListOf())
 
     var searchHeroesLists by mutableStateOf(listOf<Hero>())
 
@@ -37,7 +37,7 @@ class HeroViewModel (): ViewModel(){
 
     fun getHeroesList(context: Context){
         var dbHelper = OpenHelper(context)
-        heroesLists = dbHelper.readData()
+        heroesList = dbHelper.readData()
     }
 
     fun deleteHero(context: Context, id: Int){
