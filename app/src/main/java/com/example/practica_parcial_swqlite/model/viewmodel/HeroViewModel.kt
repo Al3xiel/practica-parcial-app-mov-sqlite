@@ -16,6 +16,20 @@ class HeroViewModel (): ViewModel(){
 
     var heroesLists: MutableList<Hero> by mutableStateOf(arrayListOf())
 
+    var searchHeroesLists by mutableStateOf(listOf<Hero>())
+
+    fun searchHeroes(name: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = RetrofitClient.webService.getHeroByName(name)
+            if (response.isSuccessful) {
+                val results = response.body()?.results ?: emptyList()
+                searchHeroesLists = results
+            } else {
+                searchHeroesLists = emptyList()
+            }
+        }
+    }
+
     fun insertHero(context: Context, hero: Hero){
         var dbHelper = OpenHelper(context)
         dbHelper.newHero(hero)
